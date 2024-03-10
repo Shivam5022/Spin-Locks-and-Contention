@@ -2,7 +2,7 @@
 CXX = g++
 
 # Compiler flags
-CXXFLAGS = -std=c++20 -Wall -O3
+CXXFLAGS = -std=c++20 -Wall
 
 # Source file
 SRC = main.cpp tas.cpp ttas.cpp alock.cpp CLHLock.cpp MCSLock.cpp

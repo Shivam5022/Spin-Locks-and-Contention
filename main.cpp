@@ -15,28 +15,28 @@ std::mt19937 rng(std::chrono::steady_clock::now().time_since_epoch().count());
 
 int main() {
     int val = 0;
-    int tot = uid(100, 200);
+    int tot = uid(20, 60);
 
-    TASLock f;
-    // TTASLock f;
-    // ALock f(tot);  //wrong
-    // CLHLock f; //wrong
-    // MCSLock f;
+    // TASLock f; //correct
+    TTASLock f; //correct
+    // ALock f(tot);  //wrong ? unsure for large N
+    // CLHLock f; //wrong ? unsure for large N
+    // MCSLock f; //wrong
 
     std::cout << std::endl;
     f.type();
     std::cout << std::endl;
 
     auto work = [&]() {
-        auto sleep = 30;
+        auto sleep = 80;
         std::this_thread::sleep_for(std::chrono::milliseconds(sleep));
         f.lock();
-            val++; val--;
-            val *= 2; val /= 2;
-            int temp = val; val = 0; val = temp;
-            val *= 2; val /= 2;
-            val++; val--;
-            val++;
+            for (int i = 0; i < 30; i++) {
+                val++; val--;
+                val *= 2; val /= 2;
+                int temp = val; val = 0; val = temp;
+            }
+            val += 2;
         f.unlock();
     };
 
@@ -51,8 +51,8 @@ int main() {
         }
     }
 
-    std::cout << val << '\n';
-    std::cout << (val == tot ? "YES" : "NO" ) << '\n';
+    std::cout << val << ' ' << tot*2 << '\n';
+    std::cout << (val == tot*2 ? "YES" : "NO" ) << '\n';
 
     return 0;
 }
