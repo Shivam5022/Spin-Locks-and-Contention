@@ -5,7 +5,7 @@ CXX = g++
 CXXFLAGS = -std=c++20 -Wall
 
 # Source file
-SRC = main.cpp tas.cpp ttas.cpp alock.cpp CLHLock.cpp MCSLock.cpp
+SRC = main.cpp locks/tas.cpp locks/ttas.cpp locks/alock.cpp locks/CLHLock.cpp locks/MCSLock.cpp
 
 # Executable name
 TARGET = prog

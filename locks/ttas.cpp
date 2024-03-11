@@ -1,4 +1,4 @@
-#include "ttas.hpp"
+#include "../header/ttas.hpp"
 #include <iostream>
 
 TTASLock::TTASLock() {

@@ -4,18 +4,18 @@
 #include <random>
 #include <thread>
 
-#include "tas.hpp"
-#include "ttas.hpp"
-#include "alock.hpp"
-#include "CLHLock.hpp"
-#include "MCSLock.hpp"
+#include "header/tas.hpp"
+#include "header/ttas.hpp"
+#include "header/alock.hpp"
+#include "header/CLHLock.hpp"
+#include "header/MCSLock.hpp"
 
 std::mt19937 rng(std::chrono::steady_clock::now().time_since_epoch().count());
 #define uid(a, b) std::uniform_int_distribution<int>(a, b)(rng)
 
 int main() {
     int val = 0;
-    int tot = 30;
+    int tot = 10;
 
     std::vector<Lock*> locks(5);
     locks[0] = new TASLock;

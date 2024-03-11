@@ -1,4 +1,4 @@
-#include "MCSLock.hpp"
+#include "../header/MCSLock.hpp"
 #include <iostream>
 
 MCSLock::MCSLock() {

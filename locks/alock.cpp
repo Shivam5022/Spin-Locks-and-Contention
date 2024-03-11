@@ -1,4 +1,4 @@
-#include "alock.hpp"
+#include "../header/alock.hpp"
 #include <iostream>
 
 ALock::ALock (int capacity) {

@@ -1,4 +1,4 @@
-#include "CLHLock.hpp"
+#include "../header/CLHLock.hpp"
 #include <iostream>
 
 CLHLock::CLHLock() {
