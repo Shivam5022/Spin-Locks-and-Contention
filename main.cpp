@@ -15,7 +15,7 @@ std::mt19937 rng(std::chrono::steady_clock::now().time_since_epoch().count());
 
 int main() {
     int val = 0;
-    int tot = uid(20, 80);
+    int tot = 30;
 
     std::vector<Lock*> locks(5);
     locks[0] = new TASLock;
@@ -24,15 +24,19 @@ int main() {
     locks[3] = new CLHLock;
     locks[4] = new MCSLock;
 
+    // std::vector<Lock*> locks(5, new MCSLock);
+
     auto criticalSection = [&](Lock* f) {
+        // auto start = std::chrono::high_resolution_clock::now();
         f->lock();
-            for (int i = 0; i < 300; i++) {
+            for (int i = 0; i < 500; i++) {
                 val++; val--;
                 val *= 2; val /= 2;
                 int temp = val; val = 0; val = temp;
             }
             val += 2;
         f->unlock();
+        // auto end = std::chrono::high_resolution_clock::now();
     };
 
     for (auto& f: locks) {

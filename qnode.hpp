@@ -2,6 +2,6 @@
 
 struct QNode {
     bool locked{false};
-    QNode* next{nullptr};
+    std::shared_ptr<QNode> next{nullptr};
     QNode(): locked(false), next(nullptr) {}
 };

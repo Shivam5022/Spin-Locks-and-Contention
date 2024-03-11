@@ -6,7 +6,7 @@ class TASLock: public Lock {
     std::atomic<bool> state;
     public:
         TASLock();
-        void lock() ;
-        void unlock() ;
-        void type() ;
+        void lock();
+        void unlock();
+        void type();
 };

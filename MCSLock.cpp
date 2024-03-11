@@ -5,13 +5,10 @@ MCSLock::MCSLock() {
     tail = nullptr;
 }
 
-MCSLock::~MCSLock() {
-    delete myNode;
-    delete tail;
-}
+MCSLock::~MCSLock() {}
 
 void MCSLock::lock() {
-    QNode* pred = tail.exchange(myNode);
+    auto pred = tail.exchange(myNode);
     if (pred != nullptr) {
         myNode->locked = true;
         pred->next = myNode;
@@ -34,4 +31,4 @@ void MCSLock::type() {
     std::cout << "MCS Lock used\n";
 }
 
-thread_local QNode* MCSLock::myNode = new QNode();
+thread_local std::shared_ptr<QNode> MCSLock::myNode(new QNode());
