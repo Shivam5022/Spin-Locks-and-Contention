@@ -1,8 +1,9 @@
 #pragma once
 #include <atomic>
 #include <vector>
+#include "lock.hpp"
 
-class ALock {
+class ALock: public Lock {
     thread_local static int mySlotIndex;
     int size;
     std::atomic<int> tail;

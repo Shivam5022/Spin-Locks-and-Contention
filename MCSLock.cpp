@@ -5,6 +5,11 @@ MCSLock::MCSLock() {
     tail = nullptr;
 }
 
+MCSLock::~MCSLock() {
+    delete myNode;
+    delete tail;
+}
+
 void MCSLock::lock() {
     QNode* pred = tail.exchange(myNode);
     if (pred != nullptr) {

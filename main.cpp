@@ -15,44 +15,44 @@ std::mt19937 rng(std::chrono::steady_clock::now().time_since_epoch().count());
 
 int main() {
     int val = 0;
-    int tot = uid(20, 60);
+    int tot = uid(20, 80);
 
-    // TASLock f; //correct
-    // TTASLock f; //correct
-    // ALock f(tot); 
-    CLHLock f; 
-    // MCSLock f; //wrong
+    std::vector<Lock*> locks(5);
+    locks[0] = new TASLock;
+    locks[1] = new TTASLock;
+    locks[2] = new ALock(tot);
+    locks[3] = new CLHLock;
+    locks[4] = new MCSLock;
 
-    std::cout << std::endl;
-    f.type();
-    std::cout << std::endl;
-
-    auto work = [&]() {
-        auto sleep = 80;
-        std::this_thread::sleep_for(std::chrono::milliseconds(sleep));
-        f.lock();
+    auto criticalSection = [&](Lock* f) {
+        f->lock();
             for (int i = 0; i < 300; i++) {
                 val++; val--;
                 val *= 2; val /= 2;
                 int temp = val; val = 0; val = temp;
             }
             val += 2;
-        f.unlock();
+        f->unlock();
     };
 
-    std::vector<std::thread> threads;
-    for (int j = 0; j < tot; j++) {
-        threads.emplace_back(work);
-    }
+    for (auto& f: locks) {
+        f->type();
 
-    for (auto &thread : threads) {
-        if (thread.joinable()) {
-            thread.join();
+        std::vector<std::thread> threads;
+        for (int j = 0; j < tot; j++) {
+            threads.emplace_back(criticalSection, f);
         }
-    }
 
-    std::cout << val << ' ' << tot*2 << '\n';
-    std::cout << (val == tot*2 ? "YES" : "NO" ) << '\n';
+        for (auto &thread : threads) {
+            if (thread.joinable()) {
+                thread.join();
+            }
+        }
+
+        std::cout << val << ' ' << tot*2 << '\n';
+        std::cout << (val == tot*2 ? "YES" : "NO" ) << "\n\n";
+        val = 0;
+    }
 
     return 0;
 }
