@@ -3,7 +3,6 @@
 
 MCSLock::MCSLock() {
     tail = nullptr;
-    myNode = new QNode;
 }
 
 void MCSLock::lock() {
@@ -17,7 +16,7 @@ void MCSLock::lock() {
 
 void MCSLock::unlock() {
     if (myNode->next == nullptr) {
-        if (tail.compare_exchange_strong(myNode, nullptr)) {
+        if (tail.compare_exchange_strong(myNode, nullptr, std::memory_order_acq_rel)) {
             return;
         }
         while (myNode->next == nullptr) {}
@@ -30,4 +29,4 @@ void MCSLock::type() {
     std::cout << "MCS Lock used\n";
 }
 
-thread_local QNode* MCSLock::myNode = new QNode;
+thread_local QNode* MCSLock::myNode = new QNode();

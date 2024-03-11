@@ -2,7 +2,7 @@
 #include <iostream>
 
 CLHLock::CLHLock() {
-    tail = new QNode;
+    tail = new QNode();
 }
 
 void CLHLock::lock() {
@@ -21,5 +21,5 @@ void CLHLock::type() {
     std::cout << "CLH Lock used\n";
 }
 
-thread_local QNode* CLHLock::myNode = new QNode; 
+thread_local QNode* CLHLock::myNode = new QNode(); 
 thread_local QNode* CLHLock::myPred = nullptr; 

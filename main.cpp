@@ -18,9 +18,9 @@ int main() {
     int tot = uid(20, 60);
 
     // TASLock f; //correct
-    TTASLock f; //correct
-    // ALock f(tot);  //wrong ? unsure for large N
-    // CLHLock f; //wrong ? unsure for large N
+    // TTASLock f; //correct
+    // ALock f(tot); 
+    CLHLock f; 
     // MCSLock f; //wrong
 
     std::cout << std::endl;
@@ -31,7 +31,7 @@ int main() {
         auto sleep = 80;
         std::this_thread::sleep_for(std::chrono::milliseconds(sleep));
         f.lock();
-            for (int i = 0; i < 30; i++) {
+            for (int i = 0; i < 300; i++) {
                 val++; val--;
                 val *= 2; val /= 2;
                 int temp = val; val = 0; val = temp;
