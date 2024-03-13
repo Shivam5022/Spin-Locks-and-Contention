@@ -17,10 +17,13 @@ void MCSLock::lock() {
 }
 
 void MCSLock::unlock() {
+    
     if (myNode->next == nullptr) {
+        auto f = myNode;
         if (tail.compare_exchange_strong(myNode, nullptr, std::memory_order_acq_rel)) {
             return;
         }
+        myNode = f;
         while (myNode->next == nullptr) {}
     }
     myNode->next->locked = false;
@@ -28,6 +31,7 @@ void MCSLock::unlock() {
 }
 
 void MCSLock::type() {
+    std::cout << "\e[1;33m \u26BF \e[0m";
     std::cout << "MCS Lock used\n";
 }
 

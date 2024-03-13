@@ -20,6 +20,7 @@ void CLHLock::unlock() {
 }
 
 void CLHLock::type() {
+    std::cout << "\e[1;33m \u26BF \e[0m";
     std::cout << "CLH Lock used\n";
 }
 

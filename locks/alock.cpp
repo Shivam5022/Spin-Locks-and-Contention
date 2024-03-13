@@ -21,6 +21,7 @@ void ALock::unlock() {
 }
 
 void ALock::type() {
+    std::cout << "\e[1;33m \u26BF \e[0m";
     std::cout << "Anderson Lock used\n";
 }
 

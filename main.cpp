@@ -10,12 +10,16 @@
 #include "header/CLHLock.hpp"
 #include "header/MCSLock.hpp"
 
+#define GREEN "\033[32m"
+#define RED "\033[31m"
+#define RESET "\033[0m"
+
 std::mt19937 rng(std::chrono::steady_clock::now().time_since_epoch().count());
 #define uid(a, b) std::uniform_int_distribution<int>(a, b)(rng)
 
 int main() {
     int val = 0;
-    int tot = 10;
+    int tot = 50;
 
     std::vector<Lock*> locks(5);
     locks[0] = new TASLock;
@@ -24,7 +28,7 @@ int main() {
     locks[3] = new CLHLock;
     locks[4] = new MCSLock;
 
-    // std::vector<Lock*> locks(5, new MCSLock);
+    std::cout << std::endl;
 
     auto criticalSection = [&](Lock* f) {
         // auto start = std::chrono::high_resolution_clock::now();
@@ -52,10 +56,14 @@ int main() {
                 thread.join();
             }
         }
-
-        std::cout << val << ' ' << tot*2 << '\n';
-        std::cout << (val == tot*2 ? "YES" : "NO" ) << "\n\n";
+        auto z = tot * 2;
+        if (val == z) std::cout << GREEN << "CORRECT" << RESET << "\n\n";
+        else std::cout << RED << "INCORRECT" << RESET << "\n\n";
         val = 0;
+    }
+
+    for (int i = 0; i < 5; i++) {
+        delete locks[i];
     }
 
     return 0;

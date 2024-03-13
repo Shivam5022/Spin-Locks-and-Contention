@@ -14,6 +14,7 @@ void TASLock::unlock() {
 }
 
 void TASLock::type() {
+    std::cout << "\e[1;33m \u26BF \e[0m";
     std::cout << "TAS Lock used\n";
 }
 
