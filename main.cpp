@@ -32,21 +32,26 @@ int main(int argc, char** argv) {
     std::cerr << "Total Threads: " << tot << std::endl;
     std::cerr << std::endl;
 
-    auto criticalSection = [&](Lock* f, int limit) {
+    auto criticalSection = [&](Lock* f) {
         f->lock();
-            for (int i = 1; i <= limit; i += 1) {
+            for (int i = 0; i < 1E7; i++) {
+                int f = 0;
+            }
+            for (int i = 1; i <= 10000; i += 1) {
                 val += 1;
+            }
+            for (int i = 0; i < 1E7; i++) {
+                int f = 0;
             }
         f->unlock();
     };
 
     for (auto& f: locks) {
-        auto start = std::chrono::high_resolution_clock::now();
         f->type();
-
         std::vector<std::thread> threads;
+        auto start = std::chrono::high_resolution_clock::now();
         for (int j = 0; j < tot; j++) {
-            threads.emplace_back(criticalSection, f, 1'000'000 / tot);
+            threads.emplace_back(criticalSection, f);
         }
 
         for (auto &thread : threads) {
@@ -58,7 +63,7 @@ int main(int argc, char** argv) {
         auto duration = std::chrono::duration_cast<std::chrono::microseconds>(end - start);
         std::cout << duration.count() / tot << std::endl; // avg time per thread
 
-        auto z = 1'000'000;
+        auto z = 10000 * tot;
         if (val == z) std::cerr << GREEN << "CORRECT" << RESET << "\n\n";
         else std::cerr << RED << "INCORRECT" << RESET << "\n\n";
         val = 0;
