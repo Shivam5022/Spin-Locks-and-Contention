@@ -19,7 +19,8 @@ std::mt19937 rng(std::chrono::steady_clock::now().time_since_epoch().count());
 
 int main(int argc, char** argv) {
     int val = 0;
-    int tot = std::stoi(argv[1]);
+    int tot = 5;
+    if (argc == 2) tot = std::stoi(argv[1]);
 
     std::vector<Lock*> locks(5);
     locks[0] = new TASLock;
