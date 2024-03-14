@@ -15,6 +15,6 @@ void TTASLock::unlock() {
 }
 
 void TTASLock::type() {
-    std::cout << "\e[1;33m \u26BF \e[0m";
-    std::cout << "TTAS Lock used\n";
+    std::cerr << "\e[1;33m \u26BF \e[0m";
+    std::cerr << "TTAS Lock used\n";
 }

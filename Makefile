@@ -16,7 +16,7 @@ $(TARGET): $(SRC)
 
 # Run rule
 run:$(TARGET)
-	./$(TARGET)
+	./$(TARGET) 2
 
 # Clean rule
 clean:

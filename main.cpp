@@ -17,9 +17,9 @@
 std::mt19937 rng(std::chrono::steady_clock::now().time_since_epoch().count());
 #define uid(a, b) std::uniform_int_distribution<int>(a, b)(rng)
 
-int main() {
+int main(int argc, char** argv) {
     int val = 0;
-    int tot = 50;
+    int tot = std::stoi(argv[1]);
 
     std::vector<Lock*> locks(5);
     locks[0] = new TASLock;
@@ -28,27 +28,25 @@ int main() {
     locks[3] = new CLHLock;
     locks[4] = new MCSLock;
 
-    std::cout << std::endl;
+    std::cerr << std::endl;
+    std::cerr << "Total Threads: " << tot << std::endl;
+    std::cerr << std::endl;
 
-    auto criticalSection = [&](Lock* f) {
-        // auto start = std::chrono::high_resolution_clock::now();
+    auto criticalSection = [&](Lock* f, int limit) {
         f->lock();
-            for (int i = 0; i < 500; i++) {
-                val++; val--;
-                val *= 2; val /= 2;
-                int temp = val; val = 0; val = temp;
+            for (int i = 1; i <= limit; i += 1) {
+                val += 1;
             }
-            val += 2;
         f->unlock();
-        // auto end = std::chrono::high_resolution_clock::now();
     };
 
     for (auto& f: locks) {
+        auto start = std::chrono::high_resolution_clock::now();
         f->type();
 
         std::vector<std::thread> threads;
         for (int j = 0; j < tot; j++) {
-            threads.emplace_back(criticalSection, f);
+            threads.emplace_back(criticalSection, f, 1'000'000 / tot);
         }
 
         for (auto &thread : threads) {
@@ -56,9 +54,13 @@ int main() {
                 thread.join();
             }
         }
-        auto z = tot * 2;
-        if (val == z) std::cout << GREEN << "CORRECT" << RESET << "\n\n";
-        else std::cout << RED << "INCORRECT" << RESET << "\n\n";
+        auto end = std::chrono::high_resolution_clock::now();
+        auto duration = std::chrono::duration_cast<std::chrono::microseconds>(end - start);
+        std::cout << duration.count() / tot << std::endl; // avg time per thread
+
+        auto z = 1'000'000;
+        if (val == z) std::cerr << GREEN << "CORRECT" << RESET << "\n\n";
+        else std::cerr << RED << "INCORRECT" << RESET << "\n\n";
         val = 0;
     }
 

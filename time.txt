@@ -1,0 +1,50 @@
+Threads=1, AVG_Time: 3309
+3423
+3231
+3162
+2969
+Threads=2, AVG_Time: 1364
+1293
+1285
+1300
+1237
+Threads=3, AVG_Time: 810
+782
+791
+806
+775
+Threads=4, AVG_Time: 626
+583
+582
+582
+578
+Threads=5, AVG_Time: 489
+447
+448
+448
+452
+Threads=6, AVG_Time: 405
+396
+394
+396
+400
+Threads=7, AVG_Time: 346
+345
+377
+380
+341
+Threads=8, AVG_Time: 300
+297
+294
+311
+297
+Threads=9, AVG_Time: 267
+263
+264
+274
+261
+Threads=10, AVG_Time: 243
+239
+248
+260
+276

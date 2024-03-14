@@ -20,8 +20,8 @@ void CLHLock::unlock() {
 }
 
 void CLHLock::type() {
-    std::cout << "\e[1;33m \u26BF \e[0m";
-    std::cout << "CLH Lock used\n";
+    std::cerr << "\e[1;33m \u26BF \e[0m";
+    std::cerr << "CLH Lock used\n";
 }
 
 thread_local std::shared_ptr<QNode> CLHLock::myPred(nullptr);

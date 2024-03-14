@@ -21,8 +21,8 @@ void ALock::unlock() {
 }
 
 void ALock::type() {
-    std::cout << "\e[1;33m \u26BF \e[0m";
-    std::cout << "Anderson Lock used\n";
+    std::cerr << "\e[1;33m \u26BF \e[0m";
+    std::cerr << "Anderson Lock used\n";
 }
 
 thread_local int ALock::mySlotIndex = 0;

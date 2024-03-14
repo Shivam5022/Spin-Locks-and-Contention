@@ -31,8 +31,8 @@ void MCSLock::unlock() {
 }
 
 void MCSLock::type() {
-    std::cout << "\e[1;33m \u26BF \e[0m";
-    std::cout << "MCS Lock used\n";
+    std::cerr << "\e[1;33m \u26BF \e[0m";
+    std::cerr << "MCS Lock used\n";
 }
 
 thread_local std::shared_ptr<QNode> MCSLock::myNode(new QNode());
