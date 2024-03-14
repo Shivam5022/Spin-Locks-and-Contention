@@ -20,4 +20,4 @@ We have implemented following locks:
 4. `aux/`: files for testing some assembly code (ASM)
 
 ### Report
-Detailed Report can be found here: [WIP]
+Detailed Report can be found here: [HERE](report.pdf)
