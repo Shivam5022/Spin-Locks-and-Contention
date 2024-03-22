@@ -50,7 +50,6 @@ int main(int argc, char** argv) {
     for (auto& f: locks) {
         f->type();
         std::vector<std::thread> threads;
-        auto start = std::chrono::high_resolution_clock::now();
         for (int j = 0; j < tot; j++) {
             threads.emplace_back(criticalSection, f);
         }
@@ -60,10 +59,6 @@ int main(int argc, char** argv) {
                 thread.join();
             }
         }
-        auto end = std::chrono::high_resolution_clock::now();
-        auto duration = std::chrono::duration_cast<std::chrono::microseconds>(end - start);
-        std::cout << duration.count() / tot << std::endl; // avg time per thread
-
         auto z = 10000 * tot;
         if (val == z) std::cerr << GREEN << "CORRECT" << RESET << "\n\n";
         else std::cerr << RED << "INCORRECT" << RESET << "\n\n";
