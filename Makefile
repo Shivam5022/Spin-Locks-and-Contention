@@ -9,6 +9,7 @@ SRC = main.cpp locks/tas.cpp locks/ttas.cpp locks/alock.cpp locks/CLHLock.cpp lo
 
 # Executable name
 TARGET = prog
+THREADS = 10
 
 # Build rule
 $(TARGET): $(SRC)
@@ -16,7 +17,7 @@ $(TARGET): $(SRC)
 
 # Run rule
 run:$(TARGET)
-	./$(TARGET) 5
+	./$(TARGET) $(THREADS)
 
 # Clean rule
 clean:

@@ -10,7 +10,7 @@ We have implemented following locks:
 
 ### How to Run?
 
-1. In `main.cpp` select the number of threads and then `make run`.
+1. In `Makefile` select the number of `THREADS` and then `make run`.
 
 ### Files in directory
 
